@@ -1,0 +1,70 @@
+---
+title: "207 Final Poject"
+
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(car)
+```
+
+
+
+```{r}
+
+df <- read.csv("Clustered_yoy_lm.csv")
+df$variable <- as.Date(df$variable)
+df$cluster <- as.factor(df$cluster)
+```
+
+```{r}
+head(df)
+```
+
+
+
+```{r}
+#min(df$value)
+#hist(df$value)
+#hist(log(df$value+100.7))
+
+```
+
+
+
+
+```{r}
+mod0 = lm(value ~ variable, data=df)
+print(summary(mod0))
+```
+
+
+
+```{r}
+mod = lm(value ~ variable * cluster, data=df)
+print(summary(mod))
+```
+
+```{r}
+Anova(mod, test.statistic="LR")
+```
+
+
+```{r}
+cat_9 <- subset(df, cluster==9)
+head(cat_9)
+```
+
+```{r fig.width=6, fig.height=5, fig.align='center'}
+par(mfrow=c(2,1))
+plot(cat_9$variable, cat_9$value, xlab="Date", ylab='YoY Value')
+abline(lm(cat_9$value ~ cat_9$variable), col="red")
+
+plot(cat_9$variable, cat_9$value, xlab="Date", ylab='YoY Value', ylim=c(-100,400))
+abline(lm(cat_9$value ~ cat_9$variable), col="red")
+```
+
+
+
+

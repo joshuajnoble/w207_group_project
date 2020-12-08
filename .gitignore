@@ -1,4 +1,4 @@
 .ipynb_checkpoints
 */.ipynb_checkpoints/*.ipynb
 *.csv#
-*.csv
+med_sale_price_yoy_no_pct.csv
